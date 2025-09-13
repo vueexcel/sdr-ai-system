@@ -6,10 +6,10 @@ const HubSpotEmailService = require('../services/hubspotEmail');
 // Main webhook endpoint called by n8n
 router.post('/expandi-webhook', async (req, res) => {
   try {
-    // Extract data from n8n webhook body
+    // Extract data directly from req.body (no nested .body)
     const webhookData = req.body;
-    const contact = webhookData.body?.contact;
-    const hookName = webhookData.body?.hook?.name;
+    const contact = webhookData.contact;        // Direct access
+    const hookName = webhookData.hook?.name;    // Direct access
     
     console.log('📡 Received webhook data:', JSON.stringify(webhookData, null, 2));
     
@@ -107,21 +107,19 @@ router.get('/health', (req, res) => {
 router.post('/test', async (req, res) => {
   try {
     const testData = {
-      body: {
-        contact: {
-          email: req.body.email || 'test@example.com'
-        },
-        hook: {
-          name: req.body.hook_name || 'Email-sent'
-        }
+      contact: {
+        email: req.body.email || 'test@example.com'
+      },
+      hook: {
+        name: req.body.hook_name || 'Email-sent'
       }
     };
 
     // Simulate the main webhook call
     console.log('🧪 Testing webhook with data:', testData);
     
-    const contact = testData.body.contact;
-    const hookName = testData.body.hook.name;
+    const contact = testData.contact;
+    const hookName = testData.hook.name;
     const emailAction = convertHookNameToAction(hookName);
     
     res.json({
