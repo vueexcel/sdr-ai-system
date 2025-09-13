@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI SDR System</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AI SDR System</h1>
+      <p>Search for prospects and assign them to campaigns</p>
+    </header>
+
+    <div class="search-section">
+      <h2>Search for Prospects</h2>
+      <div class="form-group">
+        <label for="search-query">Search Query:</label>
+        <input type="text" id="search-query" placeholder="e.g., graphic designers in chennai, india" />
+      </div>
+
+      <div class="form-group">
+        <label for="campaign-select">Select Campaign:</label>
+        <select id="campaign-select">
+          <option value="brandfy_ai">BRANDFY AI (Design Services)</option>
+          <option value="defi_fund">DEFI FUND (Institutional Investors)</option>
+          <option value="personal_injury">PERSONAL INJURY (Legal Services)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="limit-select">Result Limit:</label>
+        <select id="limit-select">
+          <option value="2">2</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+        </select>
+      </div>
+
+      <div class="form-group options">
+        <div class="checkbox-group">
+          <input type="checkbox" id="save-to-db" checked />
+          <label for="save-to-db">Save to Database</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="reveal-emails" checked />
+          <label for="reveal-emails">Reveal Personal Emails</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="assign-to-expandi" checked />
+          <label for="assign-to-expandi">Assign to Expandi</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="assign-to-hubspot" checked />
+          <label for="assign-to-hubspot">Assign to HubSpot</label>
+        </div>
+      </div>
+
+      <button id="search-button" class="btn primary">Search Prospects</button>
+    </div>
+
+    <div class="results-section">
+      <div id="loading" class="hidden">
+        <div class="spinner"></div>
+        <p>Processing your request...</p>
+      </div>
+
+      <div id="results-container" class="hidden">
+        <h2>Search Results</h2>
+        
+        <div class="summary-box">
+          <h3>Summary</h3>
+          <div id="summary-content"></div>
+        </div>
+
+        <div class="prospects-box">
+          <h3>Prospects Found</h3>
+          <div id="prospects-list"></div>
+        </div>
+
+        <div class="campaign-box">
+          <h3>Campaign Assignment</h3>
+          <div id="campaign-results"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+</html>

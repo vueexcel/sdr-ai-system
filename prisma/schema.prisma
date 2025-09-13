@@ -1,0 +1,108 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Prospect {
+  id                    Int      @id @default(autoincrement())
+  firstName            String   @map("first_name")
+  lastName             String   @map("last_name")
+  title                String?
+  company              String?
+  email                String?  
+  phone                String?
+  linkedinUrl          String?  @unique @map("linkedin_url")
+  industry             String?
+  location             String?
+  apolloContactId      String?  @unique @map("apollo_contact_id")
+  
+  // Status tracking
+  status               ProspectStatus @default(NEW)
+  linkedinConnected    Boolean  @default(false) @map("linkedin_connected")
+  connectionDate       DateTime? @map("connection_date")
+  firstMessageSent     DateTime? @map("first_message_sent")
+  lastInteraction      DateTime? @map("last_interaction")
+  responseCount        Int      @default(0) @map("response_count")
+  
+  // Expandi campaign tracking field
+  expandiCampaignId    String?  @map("expandi_campaign_id")
+  
+  // AI conversation data (JSON field)
+  conversationHistory  Json     @default("[]") @map("conversation_history")
+  
+  // Meeting info
+  meetingScheduled     DateTime? @map("meeting_scheduled")
+  meetingStatus        String?  @map("meeting_status")
+  
+  // Metadata
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  organizationId      Int?     @map("organization_id")
+  organization        Organization? @relation(fields: [organizationId], references: [id])
+  
+  @@map("prospects")
+}
+
+model Organization {
+  id              Int      @id @default(autoincrement())
+  name            String
+  domain          String?  @unique
+  industry        String?
+  employeesCount  Int?     @map("employees_count")
+  location        String?
+  linkedinUrl     String?  @map("linkedin_url")
+  websiteUrl      String?  @map("website_url")
+  revenue         String?
+  
+  // Relations
+  prospects       Prospect[]
+  
+  // Metadata
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  @@map("organizations")
+}
+
+model Campaign {
+  id              Int      @id @default(autoincrement())
+  name            String
+  description     String?
+  status          CampaignStatus @default(ACTIVE)
+  
+  // Campaign settings
+  dailyLimit      Int      @default(25) @map("daily_limit")
+  messageTemplate String?  @map("message_template")
+  
+  // Metadata
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  @@map("campaigns")
+}
+
+enum ProspectStatus {
+  NEW
+  CONNECTION_SENT
+  CONNECTED
+  MESSAGED
+  RESPONDED
+  QUALIFIED
+  IN_CAMPAIGN  
+  MEETING_BOOKED
+  CLOSED
+  NOT_INTERESTED
+}
+
+enum CampaignStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
