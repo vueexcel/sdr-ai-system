@@ -71,12 +71,10 @@ router.post('/expandi-webhook', async (req, res) => {
 // Convert Expandi hook names to exact HubSpot radio button values
 function convertHookNameToAction(hookName) {
   const hookMap = {
-    'Email-sent': 'Email sent',         // ✅ Matches HubSpot option 1
-    'Email-opened': 'Email opened',     // ✅ Matches HubSpot option 4
-    'Email-open': 'Email open',         // ✅ Matches HubSpot option 2  
-    'Email-replied': 'Email sent',      // No "replied" option, use "sent"
-    'Email-bounced': 'Email bounced',   // ✅ Matches HubSpot option 3
-    'Email-clicked': 'Email opened'     // No "clicked" option, use "opened"
+    'Email-sent': 'Email sent',        
+    'Email-opened': 'Email opened',     
+    'Email-bounced': 'Email bounced',   
+    'Email-clicked': 'Email clicked'    
   };
   
   const mappedAction = hookMap[hookName];
