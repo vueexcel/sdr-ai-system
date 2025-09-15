@@ -142,8 +142,8 @@ router.post('/test', async (req, res) => {
 router.get('/actions', (req, res) => {
   const actions = [
     { hubspot_value: 'Email sent', expandi_hooks: ['Email-sent'] },
-    { hubspot_value: 'Email open', expandi_hooks: ['Email-open'] },
-    { hubspot_value: 'Email opened', expandi_hooks: ['Email-opened', 'Email-clicked'] },
+    { hubspot_value: 'Email opened', expandi_hooks: ['Email-opened'] },
+    { hubspot_value: 'Email clicked', expandi_hooks: ['Email-clicked'] },
     { hubspot_value: 'Email bounced', expandi_hooks: ['Email-bounced'] }
   ];
 
